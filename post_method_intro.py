@@ -1,4 +1,5 @@
 from flask import Flask, jsonify, request
+import json
 app=Flask(__name__)
 
 languages=[{'name': 'Japanese', 'traits':'easy'}, {'name': 'Chinese','traits':'difficult'}]
@@ -23,8 +24,9 @@ def returnOne(name):
 
 @app.route('/lang', methods=['POST'])
 def addOne():
-	language={'name': request.json['name'], 'traits':request.json['traits']}
-	languages.append(language)
+	data=request.data
+	data=json.loads(data)
+	languages.append(data)
 	return jsonify ({'languages': languages})
 
 
